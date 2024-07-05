@@ -7,18 +7,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Box::new(std::io::stdin())
     };
 
-    std::io::copy(&mut Rot13Reader::from(reader), &mut std::io::stdout())?;
+    std::io::copy(&mut Rot13Reader(reader), &mut std::io::stdout())?;
 
     Ok(())
 }
 
 struct Rot13Reader<T: std::io::Read>(T);
-
-impl<T: std::io::Read> From<T> for Rot13Reader<T> {
-    fn from(value: T) -> Self {
-        Self(value)
-    }
-}
 
 impl<T: std::io::Read> std::io::Read for Rot13Reader<T> {
     fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
