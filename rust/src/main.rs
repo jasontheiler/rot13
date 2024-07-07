@@ -1,10 +1,10 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = std::env::args();
-    let reader: Box<dyn std::io::Read> = if args.len() > 1 {
+    let reader: &mut dyn std::io::Read = if args.len() > 1 {
         let input = args.skip(1).collect::<Vec<_>>().join(" ") + "\n";
-        Box::new(std::io::Cursor::new(input))
+        &mut std::io::Cursor::new(input)
     } else {
-        Box::new(std::io::stdin())
+        &mut std::io::stdin()
     };
 
     std::io::copy(&mut Rot13Reader(reader), &mut std::io::stdout())?;
