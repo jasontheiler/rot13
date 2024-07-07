@@ -27,8 +27,8 @@ type rot13Reader struct {
 
 func (r13 rot13Reader) Read(p []byte) (n int, err error) {
 	n, err = r13.r.Read(p)
+	var a byte
 	for i, b := range p {
-		var a byte
 		switch {
 		case b >= 'a' && b <= 'z':
 			a = 'a'
